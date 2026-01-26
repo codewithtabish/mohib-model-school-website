@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mohib Model School – Official Website
 
-## Getting Started
+Welcome to the official website of **Mohib Model School**.  
+This project represents our institution’s digital presence, designed to provide clear information for parents, students, and visitors while reflecting our commitment to **academic excellence, discipline, and character building**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🏫 About Mohib Model School
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Mohib Model School** is dedicated to delivering quality education through:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Concept-based learning
+- A disciplined academic environment
+- Strong moral and character development
+- Consistent preparation for board examinations
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Our goal is to nurture confident, responsible, and high-achieving students.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🌐 Website Purpose
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The website serves as a central platform to:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Share admission information and school notices
+- Highlight academic achievements and events
+- Provide essential details for parents and guardians
+- Present the school’s values and educational approach
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## ✨ Key Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Modern, responsive UI built with **Next.js**
+- Clean and accessible design using **Tailwind CSS**
+- Smooth animations with **Framer Motion**
+- Reusable UI components via **shadcn/ui**
+- Optimized for performance and readability
+- Mobile-friendly layout for all devices
+
+---
+
+## 🧱 Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui
+- **Animations:** Framer Motion
+- **Fonts:** Google Fonts
+- **Icons:** Lucide Icons
+
+---
+
+## 📂 Project Structure (Overview)
+
+```txt
+src/
+├── app/                # App router pages
+├── components/         # Reusable UI components
+│   ├── HeroSection.tsx
+│   ├── CtaSection.tsx
+│   └── ui/             # shadcn/ui components
+├── lib/                # Utility functions
+public/
+├── images/
+│   └── hero/           # School images
