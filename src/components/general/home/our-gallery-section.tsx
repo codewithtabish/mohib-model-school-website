@@ -92,7 +92,10 @@ export default function EventSection() {
           className="grid gap-10"
         >
           {/* Header */}
-          <motion.div variants={fadeUp} className="flex flex-col gap-3">
+          <motion.div 
+                    // @ts-ignore
+
+          variants={fadeUp} className="flex flex-col gap-3">
             <div className="flex flex-wrap items-center gap-2">
               <Badge className="rounded-full">Events</Badge>
               <Badge variant="secondary" className="rounded-full">
@@ -114,7 +117,10 @@ export default function EventSection() {
                 </p>
               </div>
 
-              <motion.div variants={fadeUp} className="flex gap-2">
+              <motion.div
+                        // @ts-ignore
+
+              variants={fadeUp} className="flex gap-2">
                 <Button asChild className="rounded-xl">
                   <Link href="/events" className="inline-flex items-center gap-2">
                     View All <ArrowRight className="h-4 w-4" />
@@ -130,7 +136,11 @@ export default function EventSection() {
           {/* Content */}
           <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
             {/* Left: Upcoming Events */}
-            <motion.div variants={fadeUp} className="grid gap-4">
+            
+            <motion.div 
+                      // @ts-ignore
+
+            variants={fadeUp} className="grid gap-4">
               {events.map((e) => (
                 <motion.div
                   key={e.title}
@@ -179,7 +189,10 @@ export default function EventSection() {
             </motion.div>
 
             {/* Right: Notices + Highlights */}
-            <motion.div variants={fadeUp} className="grid gap-4">
+            <motion.div
+                      // @ts-ignore
+
+             variants={fadeUp} className="grid gap-4">
               {/* Notices */}
               <Card className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
@@ -275,7 +288,10 @@ export default function EventSection() {
           </div>
 
           {/* Bottom date strip */}
-          <motion.div variants={fadeUp}>
+          <motion.div
+                    // @ts-ignore
+
+           variants={fadeUp}>
             <Card className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm">
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/12 via-transparent to-primary/8" />
               <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
