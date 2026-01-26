@@ -1,4 +1,4 @@
-import AcademicsSection from '@/components/general/home/academic-section'
+// import AcademicsSection from '@/components/general/home/academic-section'
 import CtaSection from '@/components/general/home/call-to-action'
 import { FeatureSection } from '@/components/general/home/feature-section'
 import TestimonialsSection from '@/components/general/home/feedback-section'
