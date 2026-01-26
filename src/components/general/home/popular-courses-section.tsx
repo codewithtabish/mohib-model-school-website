@@ -1,9 +1,9 @@
 /* app/components/PopularCoursesSection.tsx */
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { Users, Clock } from 'lucide-react';
+import Image from "next/image";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Users, Clock } from "lucide-react";
 
 type Course = {
   id: string;
@@ -18,43 +18,43 @@ type Course = {
 
 const courses: Course[] = [
   {
-    id: '1',
-    title: 'Basic English for Kids',
-    author: 'Melissa Jones',
+    id: "1",
+    title: "Spoken English Course",
+    author: "Certified English Instructors",
     description:
-      'Blandit accumsan ei vis, maiorum epicurei at mei nibh viderer ius pri te fabulas molestiae necss',
-    price: 220,
-    image: '/images/courses/1.jpg', // <-- replace with your image
-    students: 1,
-    duration: '2 hours',
+      "A confidence-building spoken English course designed to improve pronunciation, vocabulary, grammar, and daily conversation skills for students of all levels.",
+    price: 0,
+    image: "/images/courses/english.jpg",
+    students: 150,
+    duration: "3 Months",
   },
   {
-    id: '2',
-    title: 'Fun Yoga for Toddlers',
-    author: 'Melissa Jones',
+    id: "2",
+    title: "Computer Studies",
+    author: "Qualified Computer Teachers",
     description:
-      'Blandit accumsan ei vis, maiorum epicurei at mei nibh viderer ius pri te fabulas molestiae necss',
-    price: 190,
-    image: '/images/courses/1.jpg', // <-- replace with your image
-    students: 1,
-    duration: '2 hours',
+      "This course introduces students to computer fundamentals including typing skills, MS Word, PowerPoint, internet usage, and basic digital awareness.",
+    price: 0,
+    image: "/images/courses/computer.jpg",
+    students: 120,
+    duration: "3 Months",
   },
-  {
-    id: '3',
-    title: 'Weekend Music Lessons',
-    author: 'Melissa Jones',
-    description:
-      'Blandit accumsan ei vis, maiorum epicurei at mei nibh viderer ius pri te fabulas molestiae necss',
-    price: 200,
-    image: '/images/courses/1.jpg', // <-- replace with your image
-    students: 1,
-    duration: '2 hours',
-  },
+//   {
+//     id: "3",
+//     title: "Personality Development",
+//     author: "Student Development Team",
+//     description:
+//       "Focused on confidence building, discipline, communication skills, and positive behavior to help students grow academically and socially.",
+//     price: 0,
+//     image: "/images/courses/personality.jpg",
+//     students: 100,
+//     duration: "2 Months",
+//   },
 ];
 
 function CourseCard({ course }: { course: Course }) {
   return (
-    <Card className="overflow-hidden rounded-none border border-border bg-background shadow-none">
+    <Card className="overflow-hidden border border-border bg-background shadow-none">
       {/* Image */}
       <div className="relative aspect-[4/3] w-full bg-muted">
         <Image
@@ -63,15 +63,7 @@ function CourseCard({ course }: { course: Course }) {
           fill
           className="object-cover"
           sizes="(max-width: 1024px) 100vw, 33vw"
-          priority={false}
         />
-
-        {/* Price badge (top-right) */}
-        <div className="absolute right-0 top-0 m-4">
-          <div className="min-w-[56px] rounded-none bg-[#f6c75c] px-3 py-2 text-center text-sm font-semibold text-black">
-            {course.price}
-          </div>
-        </div>
       </div>
 
       {/* Content */}
@@ -80,18 +72,20 @@ function CourseCard({ course }: { course: Course }) {
           {course.title}
         </h3>
 
-        <p className="mt-4 text-base text-muted-foreground">{course.author}</p>
+        <p className="mt-4 text-sm font-medium text-muted-foreground">
+          {course.author}
+        </p>
 
         <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
           {course.description}
         </p>
       </CardContent>
 
-      {/* Footer line */}
+      {/* Footer */}
       <CardFooter className="flex items-center gap-6 border-t border-border px-8 py-6 text-muted-foreground">
         <div className="flex items-center gap-2 text-sm">
           <Users className="h-4 w-4" />
-          <span>{course.students}</span>
+          <span>{course.students}+ Students</span>
         </div>
 
         <div className="flex items-center gap-2 text-sm">
@@ -114,16 +108,16 @@ export default function PopularCoursesSection() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-4xl text-xl leading-relaxed text-muted-foreground">
-            Etiam porttitor risus massa nec condiment gravida nibh vel velit
-            auctor aliquethean sollicitudin, lorem quis bibendum auci elit
-            consequatipsutis sem nibh id elit.
+            Mohib Model School offers skill-based and academic support courses
+            designed to strengthen communication, technical knowledge, and
+            student confidence.
           </p>
         </div>
 
         {/* Cards grid */}
-        <div className="mt-20 grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {courses.map((c) => (
-            <CourseCard key={c.id} course={c} />
+        <div className="mt-20 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {courses.map((course) => (
+            <CourseCard key={course.id} course={course} />
           ))}
         </div>
       </div>

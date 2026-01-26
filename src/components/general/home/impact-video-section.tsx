@@ -1,5 +1,6 @@
 "use client";
 
+import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
 import React from "react";
 
 function TypingText({
@@ -89,31 +90,50 @@ export default function ImpactVideoSection() {
           </div>
 
           {/* RIGHT — VIDEO */}
-          <div className="relative overflow-hidden rounded-3xl bg-card shadow-sm">
-            <div className="relative aspect-[4/3] w-full">
-              <video
+          <div className="relative overflow-hidden ">
+            <div className="relative">
+
+                <div className="relative">
+      <HeroVideoDialog
+        className="block dark:hidden"
+        animationStyle="top-in-bottom-out"
+        videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
+        thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
+        thumbnailAlt="Hero Video"
+      />
+      <HeroVideoDialog
+        className="hidden dark:block"
+        animationStyle="top-in-bottom-out"
+        videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
+        thumbnailSrc="https://startup-template-sage.vercel.app/hero-dark.png"
+        thumbnailAlt="Hero Video"
+      />
+    </div>
+
+
+  {/* <video
                 className="absolute inset-0 h-full w-full object-cover"
                 autoPlay
                 muted
                 loop
                 playsInline
                 preload="metadata"
-              >
-                <source src="/videos/impact.mp4" type="video/mp4" />
+              > */}
+                {/* <source src="/videos/impact.mp4" type="video/mp4" /> */}
                 {/* Optional WebM */}
                 {/* <source src="/videos/impact.webm" type="video/webm" /> */}
-              </video>
+              {/* </video> */}
 
               {/* light wave overlay */}
-              <div className="pointer-events-none absolute inset-0 bg-[url('/images/wave.png')] bg-repeat-x bg-top opacity-25 dark:opacity-20" />
+              {/* <div className="pointer-events-none absolute inset-0 bg-[url('/images/wave.png')] bg-repeat-x bg-top opacity-25 dark:opacity-20" /> */}
 
               {/* clarity boost */}
-              <div className="pointer-events-none absolute inset-0 [filter:contrast(1.04)_saturate(1.03)]" />
+              {/* <div className="pointer-events-none absolute inset-0 [filter:contrast(1.04)_saturate(1.03)]" /> */}
             </div>
 
-            <div className="absolute bottom-4 left-4 rounded-full bg-background/70 px-3 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur">
+            {/* <div className="absolute bottom-4 left-4 rounded-full bg-background/70 px-3 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur">
               Watch a quick tour
-            </div>
+            </div> */}
           </div>
 
         </div>
