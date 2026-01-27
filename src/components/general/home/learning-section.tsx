@@ -67,7 +67,7 @@ export default function LearningSection() {
       {/* Outer spacing */}
       <div className="mx-auto px-4 py-14 sm:py-16 lg:py-20">
         {/* ✅ Rounded container (NO BORDER) */}
-        <div className="relative overflow-hidden rounded-3xl bg-transparent shadow-none">
+        <div className="relative overflow-hidden ">
           {/* ✅ Background layers */}
           <div className="absolute inset-0">
             {/* Main photo (crisp) */}
@@ -82,15 +82,15 @@ export default function LearningSection() {
             />
 
             {/* Wave overlay */}
-            <Image
+            {/* <Image
               src="/images/wave.png"
               alt=""
               fill
               sizes="100vw"
               quality={100}
               priority={false}
-              className="object-cover opacity-55 dark:opacity-45"
-            />
+              className="object-cover opacity-55 "
+            /> */}
 
             {/* Perceived sharpness */}
             <div className="pointer-events-none absolute inset-0 [filter:contrast(1.06)_saturate(1.06)]" />

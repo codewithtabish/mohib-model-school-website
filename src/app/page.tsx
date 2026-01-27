@@ -42,7 +42,6 @@ const HomePage = () => {
       <TestimonialsSection/>
       {/* <ShapeHero/> */}
       <CtaSection/>
-      <FooterGlow/>
 
      
     </div>

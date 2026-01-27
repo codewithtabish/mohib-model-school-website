@@ -28,7 +28,10 @@ export default function LearningSystemSection() {
         >
           {/* ✅ Background layers inside rounded card */}
           <div className="absolute inset-0">
+
             {/* Main photo */}
+            <div className="dark:hidden">
+
             <Image
               src="/images/learning.jpg"
               alt="Learning system background"
@@ -36,21 +39,25 @@ export default function LearningSystemSection() {
               sizes="(max-width: 1024px) 100vw, 1200px"
               quality={100}
               priority={false}
-              className="object-cover object-[42%_28%] sm:object-[48%_25%] lg:object-[55%_30%]"
-            />
+              className="object-cover object-[42%_28%] sm:object-[48%_25%] lg:object-[55%_30%] "
+              />
+              </div>
 
             {/* ✅ Your wave background image (put it in /public/images/waves/learning-wave.png for example) */}
+            <div className="dark:hidden">
+
             <Image
               src="/images/wave.png"
               alt=""
               fill
               priority={false}
               sizes="(max-width: 1024px) 100vw, 1200px"
-              className="object-cover opacity-90 dark:opacity-70"
-            />
+              className="object-cover opacity-90 dark:opacity-100"
+              />
+              </div>
 
             {/* ✅ Readability shade ONLY behind right-side text */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-[76%] bg-gradient-to-l from-background/85 via-background/35 to-transparent dark:from-background/78 dark:via-background/28" />
+            {/* <div className="pointer-events-none absolute inset-y-0 right-0 w-[76%] bg-gradient-to-l from-background/85 via-background/35 to-transparent dark:from-background/78 dark:via-background/28" /> */}
 
             {/* ✅ Subtle premium texture (keeps shadcn light/dark nice) */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(0,0,0,0.03),transparent_45%),radial-gradient(circle_at_78%_30%,rgba(0,0,0,0.02),transparent_52%)] dark:bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.08),transparent_45%),radial-gradient(circle_at_78%_30%,rgba(255,255,255,0.06),transparent_52%)]" />

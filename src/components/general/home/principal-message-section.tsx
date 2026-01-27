@@ -33,7 +33,7 @@ function PrincipalMessageSection() {
 
               <div className="relative aspect-[4/5] w-full">
                 <Image
-                  src="/images/baba.jpg"
+                  src="/images/staff/ahmad.jpeg"
                   alt="Principal of Mohib Model School"
                   fill
                   priority
@@ -44,8 +44,7 @@ function PrincipalMessageSection() {
               {/* Name overlay */}
               <div className="absolute bottom-6 left-6 right-6 rounded-2xl bg-background/80 px-4 py-3 backdrop-blur shadow-sm">
                 <div className="text-sm font-semibold text-foreground">
-                  ABDUL NAEEM 
-                </div>
+                  AHMAD SHAH SAIB                </div>
                 <div className="text-xs text-muted-foreground">
                   Principal, Mohib Model School
                 </div>
