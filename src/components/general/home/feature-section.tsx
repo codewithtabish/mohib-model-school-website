@@ -1,63 +1,20 @@
-// src/components/general/home/feature-section.tsx
 "use client";
 
 import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useParams } from "next/navigation";
+import { getLocale, type Locale } from "@/data/locale";
+import { FEATURE_SECTION_MESSAGES, type FeatureItem } from "@/data/feature-section-data";
 
-type FeatureType = {
-  title: string;
-  iconSrc: string; // image in /public
-  iconAlt: string;
-  description: string;
-};
+export function FeatureSection({ locale }: { locale?: Locale }) {
+  const params = useParams();
+  const routeLocale = (params?.locale as unknown) ?? undefined;
+  const safeLocale = getLocale(locale ?? routeLocale);
+  const isUrdu = safeLocale === "ur";
 
-const features: FeatureType[] = [
-  {
-    title: "Concept-Based Learning",
-    iconSrc: "/images/feature/home.png",
-    iconAlt: "Learning icon",
-    description:
-      "We focus on understanding concepts deeply instead of rote memorization, helping students build strong academic foundations.",
-  },
-  {
-    title: "Qualified Teachers",
-    iconSrc: "/images/feature/daycare.png",
-    iconAlt: "Teachers icon",
-    description:
-      "Experienced and dedicated teachers guide students with clarity, discipline, and continuous academic support.",
-  },
-  {
-    title: "Regular Assessments",
-    iconSrc: "/images/feature/learning.png",
-    iconAlt: "Assessment icon",
-    description:
-      "Weekly quizzes and monthly tests keep students prepared and help parents track academic progress.",
-  },
-  {
-    title: "Small Class Attention",
-    iconSrc: "/images/feature/outdoor.png",
-    iconAlt: "Class icon",
-    description:
-      "Balanced class sizes ensure individual attention, better interaction, and improved student performance.",
-  },
-  {
-    title: "Healthy Environment",
-    iconSrc: "/images/feature/healthy-meal.png",
-    iconAlt: "Healthy meals icon",
-    description:
-      "A clean, supportive atmosphere and healthy habits help students stay focused, active, and motivated.",
-  },
-  {
-    title: "Events & Activities",
-    iconSrc: "/images/feature/baloon.png",
-    iconAlt: "Events icon",
-    description:
-      "Sports day, annual functions, and co-curricular activities build confidence, teamwork, and leadership skills.",
-  },
-];
+  const t = FEATURE_SECTION_MESSAGES[safeLocale];
 
-export function FeatureSection() {
   return (
     <section className="relative mt-24 overflow-hidden bg-background py-20 sm:py-24">
       {/* Hero-like background (matches your navbar/hero style) */}
@@ -69,20 +26,19 @@ export function FeatureSection() {
 
       <div className="relative mx-auto w-full max-w-6xl px-4">
         {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center">
+        <div className={cn("mx-auto max-w-3xl text-center", isUrdu && "text-right")}>
           <h2 className="text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
-            A Strong Foundation for Academic Excellence
+            {t.heading}
           </h2>
           <p className="mt-4 text-balance text-sm text-muted-foreground md:text-base">
-            Mohib Model School focuses on discipline, concept-based learning, and
-            consistent assessment to help students grow academically and personally.
+            {t.subheading}
           </p>
         </div>
 
         {/* Exact-like layout: 3 columns x 2 rows, airy */}
         <div className="mt-14 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f) => (
-            <FeatureBlock key={f.title} feature={f} />
+          {t.items.map((f) => (
+            <FeatureBlock key={f.title} feature={f} rtl={isUrdu} />
           ))}
         </div>
       </div>
@@ -90,10 +46,10 @@ export function FeatureSection() {
   );
 }
 
-function FeatureBlock({ feature }: { feature: FeatureType }) {
+function FeatureBlock({ feature, rtl }: { feature: FeatureItem; rtl?: boolean }) {
   return (
-    <div className="group flex items-start gap-5">
-      {/* Icon image (like your screenshot) */}
+    <div className={cn("group flex items-start gap-5", rtl && "flex-row-reverse text-right")}>
+      {/* Icon image */}
       <div className="mt-1 grid h-14 w-14 place-items-center">
         <div className="relative h-14 w-14">
           <Image
@@ -108,7 +64,7 @@ function FeatureBlock({ feature }: { feature: FeatureType }) {
       </div>
 
       {/* Text */}
-      <div className={cn("max-w-sm")}>
+      <div className="max-w-sm">
         <h3 className="text-xl font-semibold tracking-tight text-foreground">
           {feature.title}
         </h3>

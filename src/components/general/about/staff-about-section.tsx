@@ -1,74 +1,16 @@
-// src/components/about/StaffSection.tsx
 "use client";
 
 import Image from "next/image";
 import { motion, useInView, type Variants } from "framer-motion";
+import { useParams } from "next/navigation";
 import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { getLocale, type Locale } from "@/data/locale";
+import { STAFF_SECTION_MESSAGES } from "@/data/(about)/staff-section-data";
 
 const STAGGER_DELAY = 0.08;
-
-export type StaffMember = {
-  id: string;
-  name: string;
-  role: string;
-  subject?: string;
-  qualification?: string;
-  experience?: string;
-  bio?: string;
-  photo?: string; // /public/images/staff/...
-};
-
-type StaffSectionProps = {
-  title?: string;
-  description?: string;
-  members?: StaffMember[];
-  className?: string;
-};
-
-const defaultMembers: StaffMember[] = [
-  {
-    id: "1",
-    name: "Ahmad Shah",
-    role: "Principal",
-    qualification: "BS E-Commerce",
-    experience: "10+ Years",
-    bio: "Focused on discipline, academic excellence, and overall student growth.",
-    photo: "/images/staff/ahmad.jpeg",
-  },
-  {
-    id: "2",
-    name: "Senior Teacher",
-    role: "Senior Teacher",
-    subject: "Mathematics",
-    qualification: "M.Sc Mathematics",
-    experience: "8+ Years",
-    bio: "Specializes in concept-based learning and board exam preparation.",
-    photo: "/images/staff/math-teacher.jpg",
-  },
-  {
-    id: "3",
-    name: "English Teacher",
-    role: "English Instructor",
-    subject: "Spoken English",
-    qualification: "M.A English",
-    experience: "6+ Years",
-    bio: "Helps students build confidence, pronunciation, and communication skills.",
-    photo: "/images/staff/english-teacher.jpg",
-  },
-  {
-    id: "4",
-    name: "Computer Teacher",
-    role: "Computer Instructor",
-    subject: "Computer Studies",
-    qualification: "BS Computer Science",
-    experience: "5+ Years",
-    bio: "Teaches computer basics, typing, MS Office, and digital awareness.",
-    photo: "/images/staff/computer-teacher.jpg",
-  },
-];
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -81,22 +23,22 @@ const fadeUp: Variants = {
   },
 };
 
-export default function StaffSection({
-  title = "Our Staff",
-  description =
-    "Meet the dedicated teachers and leadership team of Mohib Model School, committed to quality education, discipline, and student success.",
-  members = defaultMembers,
-  className,
-}: StaffSectionProps) {
+export default function StaffSection({ locale }: { locale?: Locale }) {
+  const params = useParams();
+  const routeLocale = (params?.locale as unknown) ?? undefined;
+
+  const safeLocale = getLocale(locale ?? routeLocale);
+  const isUrdu = safeLocale === "ur";
+
+  const t = STAFF_SECTION_MESSAGES[safeLocale];
+
   const ref = useRef<HTMLDivElement | null>(null);
   const inView = useInView(ref, { once: true, amount: 0.25 });
 
   return (
     <section
-      className={cn(
-        "relative overflow-hidden bg-background py-20 sm:py-24",
-        className
-      )}
+      dir={isUrdu ? "rtl" : "ltr"}
+      className={cn("relative overflow-hidden bg-background py-20 sm:py-24")}
     >
       {/* Theme background (NO blur) */}
       <div className="pointer-events-none absolute inset-0">
@@ -112,22 +54,19 @@ export default function StaffSection({
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="mx-auto max-w-3xl text-center"
+          className={cn("mx-auto max-w-3xl text-center", isUrdu && "text-right")}
         >
           <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            {title}
+            {t.title}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            {description}
+            {t.description}
           </p>
         </motion.div>
 
         {/* Staff Grid */}
-        <div
-          ref={ref}
-          className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {members.map((m, index) => (
+        <div ref={ref} className={cn("mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3", isUrdu && "md:[direction:rtl]")}>
+          {t.members.map((m, index) => (
             <motion.div
               key={m.id}
               initial={{ opacity: 0, y: 22 }}
@@ -139,7 +78,7 @@ export default function StaffSection({
               }}
               whileHover={{ y: -3 }}
             >
-              <Card className="group relative overflow-hidden rounded-3xl border-border bg-card shadow-sm">
+              <Card className={cn("group relative overflow-hidden rounded-3xl border-border bg-card shadow-sm", isUrdu && "text-right")}>
                 {/* Image */}
                 <div className="relative aspect-square w-full overflow-hidden bg-muted">
                   {m.photo ? (
@@ -152,14 +91,14 @@ export default function StaffSection({
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">
-                      Photo coming soon
+                      {t.labels.photoComingSoon}
                     </div>
                   )}
                 </div>
 
                 {/* Content */}
                 <div className="p-5">
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className={cn("flex flex-wrap items-center gap-2", isUrdu && "justify-end")}>
                     <Badge className="rounded-full">{m.role}</Badge>
                     {m.subject && (
                       <Badge variant="secondary" className="rounded-full">
@@ -168,16 +107,18 @@ export default function StaffSection({
                     )}
                   </div>
 
-                  <h3 className="mt-3 text-lg font-semibold text-foreground">
-                    {m.name}
-                  </h3>
+                  <h3 className="mt-3 text-lg font-semibold text-foreground">{m.name}</h3>
 
                   <div className="mt-2 space-y-1 text-sm text-muted-foreground">
                     {m.qualification && (
-                      <p>Qualification: {m.qualification}</p>
+                      <p>
+                        {t.labels.qualification}: {m.qualification}
+                      </p>
                     )}
                     {m.experience && (
-                      <p>Experience: {m.experience}</p>
+                      <p>
+                        {t.labels.experience}: {m.experience}
+                      </p>
                     )}
                   </div>
 

@@ -1,19 +1,29 @@
-// src/components/TopStrip.tsx
 "use client";
 
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
+import { Locale, TOP_STRIP_MESSAGES } from "@/data/stir-up-section-data";
+import { getLocale } from "@/data/locale";
+
 
 /**
- * TopStrip (more "Hero-style" attractive)
- * - Adds soft background blobs + subtle radial pattern (like Hero)
- * - Adds premium gradient highlight line
- * - Keeps compact height + shadcn tokens
- * - Keeps: no email, no admissions button
+ * TopStrip (Stir-up)
+ * - Locale-aware via URL param /[locale]
+ * - Optional prop locale supported
+ * - Uses getLocale() fallback (en default)
  */
 
-export default function TopStrip() {
+export default function TopStrip({ locale }: { locale?: Locale }) {
   const reduce = useReducedMotion();
+  const params = useParams();
+
+  // Try prop first; else use route param; else fallback to "en"
+  const routeLocale = (params?.locale as unknown) ?? undefined;
+  const safeLocale = getLocale(locale ?? routeLocale);
+
+  const t = TOP_STRIP_MESSAGES[safeLocale];
+  const noticesHref = `/${safeLocale}${t.noticesHref}`;
 
   return (
     <motion.div
@@ -45,7 +55,7 @@ export default function TopStrip() {
               📍
             </span>
             <span className="hover:text-foreground transition-colors">
-              Mohib Model School, Your Area, Your City
+              {t.location}
             </span>
           </motion.span>
 
@@ -59,28 +69,33 @@ export default function TopStrip() {
             <span className="grid h-4 w-4 place-items-center rounded-full border border-border bg-card text-[9px] shadow-sm">
               📞
             </span>
-            <span className="hover:text-foreground transition-colors">+92 3xx xxxxxxx</span>
+            <span className="hover:text-foreground transition-colors">
+              {t.phone}
+            </span>
           </motion.span>
         </div>
 
         {/* Right */}
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-2.5 py-0.5 text-[11px] leading-4 text-muted-foreground shadow-sm backdrop-blur">
-            🕒 Mon–Sat: 8:00 AM – 1:30 PM
+            {t.hoursBadge}
           </span>
 
-          <motion.div whileHover={reduce ? undefined : { y: -1 }} whileTap={{ scale: 0.98 }}>
+          <motion.div
+            whileHover={reduce ? undefined : { y: -1 }}
+            whileTap={{ scale: 0.98 }}
+          >
             <Link
-              href="/notices"
+              href={noticesHref}
               className="inline-flex items-center rounded-full border border-border bg-card/80 px-2.5 py-0.5 text-[11px] font-semibold leading-4 text-foreground/80 shadow-sm backdrop-blur transition hover:bg-accent hover:text-foreground"
             >
-              📌 Notices
+              {t.noticesLabel}
             </Link>
           </motion.div>
         </div>
       </div>
 
-      {/* Premium highlight line (stronger + nicer) */}
+      {/* Premium highlight line */}
       <div className="relative h-px w-full">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-border to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-70" />
@@ -96,8 +111,7 @@ export default function TopStrip() {
               transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
               className="whitespace-nowrap"
             >
-              📣 Admissions for 2026 are open • Weekly quizzes + monthly tests • PTM updates
-              regularly • Office hours: Mon–Sat 8:00 AM – 1:30 PM
+              {t.ticker}
             </motion.div>
           </div>
         </div>

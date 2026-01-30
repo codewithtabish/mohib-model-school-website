@@ -1,7 +1,12 @@
 "use client";
 
-import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
 import React from "react";
+import { useParams } from "next/navigation";
+import { motion, useReducedMotion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { getLocale, type Locale } from "@/data/locale";
+import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
+import { IMPACT_VIDEO_MESSAGES } from "@/data/impact-video-section-data";
 
 function TypingText({
   text,
@@ -47,9 +52,10 @@ function TypingText({
     <span className="whitespace-pre-wrap">
       {out}
       <span
-        className={`inline-block w-[10px] align-baseline ${
+        className={cn(
+          "inline-block w-[10px] align-baseline",
           showCursor ? "opacity-100" : "opacity-0"
-        }`}
+        )}
       >
         |
       </span>
@@ -57,13 +63,18 @@ function TypingText({
   );
 }
 
-export default function ImpactVideoSection() {
-  const typing =
-    "At our school, learning is built step-by-step — from Playgroup to Matric.\n\nWe focus on strong fundamentals, confident communication, and modern classroom methods.\n\nDaily practice, caring teachers, and board-focused preparation help students grow with clarity and confidence.";
+export default function ImpactVideoSection({ locale }: { locale?: Locale }) {
+  const reduce = useReducedMotion();
+  const params = useParams();
+
+  const routeLocale = (params?.locale as unknown) ?? undefined;
+  const safeLocale = getLocale(locale ?? routeLocale);
+  const isUrdu = safeLocale === "ur";
+
+  const t = IMPACT_VIDEO_MESSAGES[safeLocale];
 
   return (
     <section className="relative overflow-hidden">
-      {/* Outer spacing */}
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-16 lg:py-20">
         {/* Wave background */}
         <div
@@ -73,69 +84,60 @@ export default function ImpactVideoSection() {
 
         {/* TWO COLUMN LAYOUT */}
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          
-          {/* LEFT — TEXT */}
-          <div>
+          {/* TEXT */}
+          <motion.div
+            initial={reduce ? undefined : { opacity: 0, y: 10 }}
+            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className={cn(
+              isUrdu ? "lg:order-2 text-right" : "lg:order-1 text-left"
+            )}
+            dir={isUrdu ? "rtl" : "ltr"}
+          >
             <h2 className="font-[cursive] text-4xl tracking-wide text-foreground sm:text-5xl">
-              SCHOOL IMPACT
+              {t.heading}
             </h2>
 
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              <TypingText text={typing} speed={18} startDelay={450} />
+              <TypingText text={t.typingText} speed={18} startDelay={450} />
             </p>
 
             <div className="mt-6 text-sm text-muted-foreground">
-              • Campus Tour • Learning Environment • Student Confidence
+              {t.bullets.map((b, idx) => (
+                <span key={b}>
+                  {idx !== 0 ? " • " : ""}
+                  {b}
+                </span>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* RIGHT — VIDEO */}
-          <div className="relative overflow-hidden ">
-            <div className="relative">
-
-                <div className="relative">
-      <HeroVideoDialog
-        className="block dark:hidden"
-        animationStyle="top-in-bottom-out"
-        videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-        thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
-        thumbnailAlt="Hero Video"
-      />
-      <HeroVideoDialog
-        className="hidden dark:block"
-        animationStyle="top-in-bottom-out"
-        videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-        thumbnailSrc="https://startup-template-sage.vercel.app/hero-dark.png"
-        thumbnailAlt="Hero Video"
-      />
-    </div>
-
-
-  {/* <video
-                className="absolute inset-0 h-full w-full object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-              > */}
-                {/* <source src="/videos/impact.mp4" type="video/mp4" /> */}
-                {/* Optional WebM */}
-                {/* <source src="/videos/impact.webm" type="video/webm" /> */}
-              {/* </video> */}
-
-              {/* light wave overlay */}
-              {/* <div className="pointer-events-none absolute inset-0 bg-[url('/images/wave.png')] bg-repeat-x bg-top opacity-25 dark:opacity-20" /> */}
-
-              {/* clarity boost */}
-              {/* <div className="pointer-events-none absolute inset-0 [filter:contrast(1.04)_saturate(1.03)]" /> */}
+          {/* VIDEO */}
+          <motion.div
+            initial={reduce ? undefined : { opacity: 0, y: 10 }}
+            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.05 }}
+            className={cn(isUrdu ? "lg:order-1" : "lg:order-2")}
+          >
+            <div className="relative overflow-hidden rounded-2xl">
+              <HeroVideoDialog
+                className="block dark:hidden"
+                animationStyle="top-in-bottom-out"
+                videoSrc={t.videoSrc}
+                thumbnailSrc={t.thumbnailLight}
+                thumbnailAlt={t.thumbnailAlt}
+              />
+              <HeroVideoDialog
+                className="hidden dark:block"
+                animationStyle="top-in-bottom-out"
+                videoSrc={t.videoSrc}
+                thumbnailSrc={t.thumbnailDark}
+                thumbnailAlt={t.thumbnailAlt}
+              />
             </div>
-
-            {/* <div className="absolute bottom-4 left-4 rounded-full bg-background/70 px-3 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur">
-              Watch a quick tour
-            </div> */}
-          </div>
-
+          </motion.div>
         </div>
       </div>
     </section>

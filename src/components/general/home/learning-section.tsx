@@ -2,6 +2,10 @@
 
 import Image from "next/image";
 import React from "react";
+import { useParams } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { getLocale, type Locale } from "@/data/locale";
+import { LEARNING_SECTION_MESSAGES } from "@/data/learning-section-data";
 
 function TypingText({
   text,
@@ -20,14 +24,15 @@ function TypingText({
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
     let intervalId: ReturnType<typeof setInterval> | undefined;
 
-    // Start delay
+    setOut("");
+    setShowCursor(true);
+
     timeoutId = setTimeout(() => {
       intervalId = setInterval(() => {
         i += 1;
         setOut(text.slice(0, i));
         if (i >= text.length) {
           if (intervalId) clearInterval(intervalId);
-          // Stop cursor after finish (optional)
           setTimeout(() => setShowCursor(false), 900);
         }
       }, speed);
@@ -48,9 +53,10 @@ function TypingText({
     <span className="whitespace-pre-wrap">
       {out}
       <span
-        className={`inline-block w-[10px] align-baseline ${
+        className={cn(
+          "inline-block w-[10px] align-baseline",
           showCursor ? "opacity-100" : "opacity-0"
-        }`}
+        )}
       >
         |
       </span>
@@ -58,19 +64,21 @@ function TypingText({
   );
 }
 
-export default function LearningSection() {
-  const typing =
-    "At our school, learning is built step-by-step — from Playgroup to Matric.\n\nWe focus on strong fundamentals, confident communication, and modern classroom methods.\n\nDaily practice, caring teachers, and board-focused preparation help students grow with clarity and confidence.";
+export default function LearningSection({ locale }: { locale?: Locale }) {
+  const params = useParams();
+  const routeLocale = (params?.locale as unknown) ?? undefined;
+
+  const safeLocale = getLocale(locale ?? routeLocale);
+  const isUrdu = safeLocale === "ur";
+
+  const t = LEARNING_SECTION_MESSAGES[safeLocale];
 
   return (
     <section className="relative overflow-hidden">
-      {/* Outer spacing */}
       <div className="mx-auto px-4 py-14 sm:py-16 lg:py-20">
-        {/* ✅ Rounded container (NO BORDER) */}
-        <div className="relative overflow-hidden ">
-          {/* ✅ Background layers */}
+        <div className="relative overflow-hidden rounded-3xl">
+          {/* Background */}
           <div className="absolute inset-0">
-            {/* Main photo (crisp) */}
             <Image
               src="/images/learning.jpg"
               alt="Learning system background"
@@ -78,47 +86,69 @@ export default function LearningSection() {
               sizes="100vw"
               quality={100}
               priority
-              className="object-cover object-[42%_28%] sm:object-[48%_25%] lg:object-[55%_30%]"
+              className={cn(
+                "object-cover",
+                // ✅ KEY FIX: in Urdu, show the image focus on RIGHT side
+                // in English, keep your original
+                isUrdu
+                  ? "object-[78%_30%] sm:object-[82%_28%] lg:object-[85%_30%]"
+                  : "object-[42%_28%] sm:object-[48%_25%] lg:object-[55%_30%]"
+              )}
             />
-
-            {/* Wave overlay */}
-            {/* <Image
-              src="/images/wave.png"
-              alt=""
-              fill
-              sizes="100vw"
-              quality={100}
-              priority={false}
-              className="object-cover opacity-55 "
-            /> */}
-
-            {/* Perceived sharpness */}
-            <div className="pointer-events-none absolute inset-0 [filter:contrast(1.06)_saturate(1.06)]" />
 
             {/* Subtle texture */}
             <div className="pointer-events-none absolute inset-0 opacity-70 bg-[radial-gradient(circle_at_20%_15%,rgba(0,0,0,0.025),transparent_45%),radial-gradient(circle_at_78%_30%,rgba(0,0,0,0.02),transparent_52%)] dark:opacity-60 dark:bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.08),transparent_45%),radial-gradient(circle_at_78%_30%,rgba(255,255,255,0.06),transparent_52%)]" />
+
+            {/* ✅ KEY FIX: overlay gradient matches text side */}
+            <div
+              className={cn(
+                "pointer-events-none absolute inset-0",
+                // Urdu text on LEFT => fade from LEFT strong -> RIGHT light
+                isUrdu
+                  ? "bg-gradient-to-r from-background/92 via-background/55 to-background/10 dark:from-background/82 dark:via-background/50 dark:to-background/10"
+                  : "bg-gradient-to-l from-background/92 via-background/55 to-background/10 dark:from-background/82 dark:via-background/50 dark:to-background/10"
+              )}
+            />
           </div>
 
-          {/* ✅ Layout sizing */}
-          <div className="relative">
-            <div className="min-h-[520px] sm:min-h-[560px] lg:min-h-[640px]">
-              {/* Content aligned RIGHT */}
-              <div className="flex min-h-[520px] sm:min-h-[560px] lg:min-h-[640px] items-center justify-end px-6 py-10 sm:px-10 lg:px-14">
-                {/* ✅ Right text block (transparent background like you want) */}
-                <div className="w-full max-w-xl rounded-2xl p-8 sm:p-10">
-                  <h2 className="font-[cursive] text-4xl tracking-wide text-black sm:text-5xl">
-                    LEARNING SYSTEM
-                  </h2>
+          {/* Layout */}
+          <div className="relative min-h-[520px] sm:min-h-[560px] lg:min-h-[640px]">
+            <div
+              className={cn(
+                "flex min-h-[520px] sm:min-h-[560px] lg:min-h-[640px] items-center px-6 py-10 sm:px-10 lg:px-14",
+                // ✅ KEY FIX: Urdu text block on LEFT, English on RIGHT
+                isUrdu ? "justify-start" : "justify-end"
+              )}
+            >
+              {/* Text Card */}
+              <div
+                className={cn(
+                  "w-full max-w-xl rounded-3xl border border-border/60 bg-background/65 p-8 shadow-sm backdrop-blur-md sm:p-10",
+                  // Urdu should be right aligned text, but card sits left
+                  isUrdu ? "text-right" : "text-left"
+                )}
+                dir={isUrdu ? "rtl" : "ltr"}
+              >
+                <h2
+                  className={cn(
+                    "text-4xl font-bold tracking-tight text-foreground sm:text-5xl",
+                    isUrdu && "leading-[1.25]"
+                  )}
+                >
+                  {t.title}
+                </h2>
 
-                  {/* ✅ Animated typing text */}
-                  <p className="mt-6 text-lg leading-relaxed text-black/80">
-                    <TypingText text={typing} speed={18} startDelay={500} />
-                  </p>
+                <p
+                  className={cn(
+                    "mt-6 text-lg leading-relaxed text-foreground/80",
+                    isUrdu && "leading-8"
+                  )}
+                >
+                  <TypingText text={t.typing} speed={18} startDelay={500} />
+                </p>
 
-                  {/* Optional small badge line */}
-                  <div className="mt-6 text-sm text-black/70">
-                    • Playgroup • Primary • Middle • Matric • Board Preparation
-                  </div>
+                <div className="mt-6 text-sm text-foreground/70">
+                  {t.trackLine}
                 </div>
               </div>
             </div>

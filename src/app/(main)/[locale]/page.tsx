@@ -19,14 +19,16 @@ import SmoothDrawer from '@/components/kokonutui/smooth-drawer'
 import FeatureSteps from '@/components/mvpblocks/feature-2'
 import FooterGlow from '@/components/mvpblocks/footer-glow'
 import { Button } from '@/components/ui/button'
+import { LocaleParams } from '@/data/locale'
+import { Locale } from '@/data/stir-up-section-data'
 import React from 'react'
 
-const HomePage = () => {
+const HomePage = ({params}:LocaleParams) => {
   return (
     <div>
-      <TopStrip/>
-      <Navbar/>
-      <HeroSection/>
+      <TopStrip locale={params.locale} />
+      <Navbar locale={params.locale}/>
+      <HeroSection locale={params.locale} />
       <PrincipalMessageSection/>
       <FeatureSection/>
       <LearningSection/>
