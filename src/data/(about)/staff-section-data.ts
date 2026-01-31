@@ -40,7 +40,7 @@ export const STAFF_SECTION_MESSAGES: Record<Locale, StaffSectionMessages> = {
       {
         id: "1",
         name: "AHMAD SHAH SAIB",
-        role: "Director",
+        role: "Principal",
         qualification: "BS E-Commerce",
         experience: "10+ Years",
         bio: "Focused on discipline, academic excellence, and overall student growth.",

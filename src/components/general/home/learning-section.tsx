@@ -84,7 +84,7 @@ export default function LearningSection({ locale }: { locale?: Locale }) {
               alt="Learning system background"
               fill
               sizes="100vw"
-              quality={100}
+              // quality={100}
               priority
               className={cn(
                 "object-cover",

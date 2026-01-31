@@ -23,12 +23,18 @@ import { LocaleParams } from '@/data/locale'
 import { Locale } from '@/data/stir-up-section-data'
 import React from 'react'
 
-const HomePage = ({params}:LocaleParams) => {
-  return (
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function HomePage({ params }: PageProps) {
+  const { locale: rawLocale } = await params;
+
+  const locale: Locale = rawLocale === "ur" ? "ur" : "en";  return (
     <div>
-      <TopStrip locale={params.locale} />
-      <Navbar locale={params.locale}/>
-      <HeroSection locale={params.locale} />
+      <TopStrip locale={locale} />
+      <Navbar locale={locale}/>
+      <HeroSection locale={locale} />
       <PrincipalMessageSection/>
       <FeatureSection/>
       <LearningSection/>
@@ -50,4 +56,4 @@ const HomePage = ({params}:LocaleParams) => {
   )
 }
 
-export default HomePage
+// export default HomePage
